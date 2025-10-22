@@ -11,7 +11,7 @@ Deployments:
 |---------------------------|--------------|-------------|
 | UCSBDiningCommonsMenuItem | Sarah        | Sarahbob    |
 | UCSBOrganization          | Saanvi       | saanvi25    |
-| RecommendationRequest     | Joseph       | Cobalt39    |
+| RecommendationRequest     | Joseph       | Cobalt396   |
 | MenuItemReview            | Keigo        | keigoomura  |
 | HelpRequest               | Kham         | Kham-arun   |
 | Articles                  | Charlie      | Gupperfisher|
