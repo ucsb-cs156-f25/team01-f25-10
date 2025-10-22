@@ -2,10 +2,6 @@
 
 Instructions: <https://ucsb-cs156.github.io/f25/lab/team01.html>
 
-TODO: change heading above to your repo name, e.g. `# team01-f25-17`
-
-TODO: Add a link to the deployed Dokku app for your team here, e.g.
-
 Deployments:
 
 * Prod: <https://team01-f25-10.dokku-10.cs.ucsb.edu>
