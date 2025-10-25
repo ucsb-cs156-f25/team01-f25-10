@@ -41,10 +41,12 @@ import org.springframework.web.bind.annotation.RestController;
   /**
    * Create a new menu item review
    *
-   * @param quarterYYYYQ the quarter in the format YYYYQ
-   * @param name the name of the date
-   * @param localDateTime the date
-   * @return the saved ucsbdate
+   * @param itemId the ID of the item being reviewed
+   * @param reviewerEmail the email of the person making the review
+   * @param stars the rating for the item
+   * @param dateReviewed the timestamp for when the review was made
+   * @param comments the additional comments about the item
+   * @return the saved menuitemreview
    */
   @Operation(summary = &quot;Create a new menu item review&quot;)
   @PreAuthorize(&quot;hasRole('ROLE_ADMIN')&quot;)
@@ -66,18 +68,18 @@ import org.springframework.web.bind.annotation.RestController;
     // For an explanation of @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     // See: https://www.baeldung.com/spring-date-parameters
 
-<span class="fc" id="L69">    log.info(&quot;dateReviewed={}&quot;, dateReviewed);</span>
+<span class="fc" id="L71">    log.info(&quot;dateReviewed={}&quot;, dateReviewed);</span>
 
-<span class="fc" id="L71">    MenuItemReview menuItemReview = new MenuItemReview();</span>
-<span class="fc" id="L72">    menuItemReview.setItemId(itemId);</span>
-<span class="fc" id="L73">    menuItemReview.setReviewerEmail(reviewerEmail);</span>
-<span class="fc" id="L74">    menuItemReview.setStars(stars);</span>
-<span class="fc" id="L75">    menuItemReview.setDateReviewed(dateReviewed);</span>
-<span class="fc" id="L76">    menuItemReview.setComments(comments);</span>
+<span class="fc" id="L73">    MenuItemReview menuItemReview = new MenuItemReview();</span>
+<span class="fc" id="L74">    menuItemReview.setItemId(itemId);</span>
+<span class="fc" id="L75">    menuItemReview.setReviewerEmail(reviewerEmail);</span>
+<span class="fc" id="L76">    menuItemReview.setStars(stars);</span>
+<span class="fc" id="L77">    menuItemReview.setDateReviewed(dateReviewed);</span>
+<span class="fc" id="L78">    menuItemReview.setComments(comments);</span>
 
-<span class="fc" id="L78">    MenuItemReview savedMenuItemReview = menuItemReviewRepository.save(menuItemReview);</span>
+<span class="fc" id="L80">    MenuItemReview savedMenuItemReview = menuItemReviewRepository.save(menuItemReview);</span>
 
-<span class="fc" id="L80">    return savedMenuItemReview;</span>
+<span class="fc" id="L82">    return savedMenuItemReview;</span>
   }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
