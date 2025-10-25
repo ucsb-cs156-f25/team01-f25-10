@@ -41,10 +41,12 @@ public class MenuItemReviewController extends ApiController {
   /**
    * Create a new menu item review
    *
-   * @param quarterYYYYQ the quarter in the format YYYYQ
-   * @param name the name of the date
-   * @param localDateTime the date
-   * @return the saved ucsbdate
+   * @param itemId the ID of the item being reviewed
+   * @param reviewerEmail the email of the person making the review
+   * @param stars the rating for the item
+   * @param dateReviewed the timestamp for when the review was made
+   * @param comments the additional comments about the item
+   * @return the saved menuitemreview
    */
   @Operation(summary = "Create a new menu item review")
   @PreAuthorize("hasRole('ROLE_ADMIN')")
