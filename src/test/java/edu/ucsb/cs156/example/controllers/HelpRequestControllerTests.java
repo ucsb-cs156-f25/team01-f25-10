@@ -1,6 +1,7 @@
 package edu.ucsb.cs156.example.controllers;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -17,6 +18,8 @@ import edu.ucsb.cs156.example.testconfig.TestConfig;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Map;
+import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -85,6 +88,56 @@ public class HelpRequestControllerTests extends ControllerTestCase {
 
     assertEquals("[]", response.getResponse().getContentAsString());
     verify(helpRequestRepository, times(1)).findAll();
+  }
+
+  // test for GET /api/helprequest?id=
+
+  @WithMockUser(roles = {"USER"})
+  @Test
+  public void test_that_user_can_get_by_id_when_the_id_exists() throws Exception {
+
+    // arrange
+    LocalDateTime t1 = LocalDateTime.parse("2022-01-03T00:00:00");
+
+    HelpRequest helpRequest =
+        HelpRequest.builder()
+            .requesterEmail("test@ucsb.edu")
+            .teamId("f25-10")
+            .tableOrBreakoutRoom("Table 5")
+            .requestTime(t1)
+            .explanation("Need help with git")
+            .solved(false)
+            .build();
+
+    when(helpRequestRepository.findById(eq(7L))).thenReturn(Optional.of(helpRequest));
+
+    // act
+    MvcResult response =
+        mockMvc.perform(get("/api/helprequest?id=7")).andExpect(status().isOk()).andReturn();
+
+    // assert
+
+    verify(helpRequestRepository, times(1)).findById(eq(7L));
+    String expectedJson = mapper.writeValueAsString(helpRequest);
+    String responseString = response.getResponse().getContentAsString();
+    assertEquals(expectedJson, responseString);
+  }
+
+  @WithMockUser(roles = {"USER"})
+  @Test
+  public void test_user_can_get_by_id_when_the_id_does_not_exist() throws Exception {
+    // arrange
+    when(helpRequestRepository.findById(eq(7L))).thenReturn(Optional.empty());
+
+    // act
+    MvcResult response =
+        mockMvc.perform(get("/api/helprequest?id=7")).andExpect(status().isNotFound()).andReturn();
+
+    // assert
+    verify(helpRequestRepository, times(1)).findById(eq(7L));
+    Map<String, Object> json = responseToJson(response);
+    assertEquals("EntityNotFoundException", json.get("type"));
+    assertEquals("HelpRequest with id 7 not found", json.get("message"));
   }
 
   // tests for POST /api/helprequest/post
