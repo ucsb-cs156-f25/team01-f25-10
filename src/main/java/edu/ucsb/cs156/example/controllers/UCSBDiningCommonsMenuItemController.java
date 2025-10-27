@@ -49,7 +49,7 @@ public class UCSBDiningCommonsMenuItemController extends ApiController {
   /**
    * Create a new diningcommonsmenuitem
    *
-   * @param diningCommonsCode dining commons code
+   * @param diningcommonscode dining commons code
    * @param name the name of the diningcommonsmenuitem
    * @param station the station for the item
    * @return the saved ucsbdiningcommonsmenuitem

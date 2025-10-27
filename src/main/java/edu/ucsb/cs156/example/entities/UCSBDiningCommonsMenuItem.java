@@ -9,7 +9,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-/** This is a JPA entity that represents a UCSBDiningCommonsMenuItem */
+/**
+ * This is a JPA entity that represents a UCSBDiningCommonsMenuItem, i.e. an entry that comes from
+ * the UCSB API for dining commons menu items.
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
