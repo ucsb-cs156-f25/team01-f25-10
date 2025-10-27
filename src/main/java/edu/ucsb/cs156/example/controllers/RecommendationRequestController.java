@@ -48,11 +48,11 @@ public class RecommendationRequestController extends ApiController {
   /**
    * Create a new recommendation request
    *
-   * @param requesterEmail the email of the requester
-   * @param professorEmail the email of the professor
+   * @param requesteremail the email of the requester
+   * @param professoremail the email of the professor
    * @param explanation explanation
-   * @param dateRequested the date requested
-   * @param dateNeeded the date needed
+   * @param daterequested the date requested
+   * @param dateneeded the date needed
    * @param done if the request is complete
    * @return the saved recommendation request
    */
