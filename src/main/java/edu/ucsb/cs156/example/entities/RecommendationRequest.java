@@ -10,7 +10,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-/** This is a JPA entity that represents a Recommendation Request */
+/**
+ * This is a JPA entity that represents a Recommendation Request, i.e. an entry that comes from the
+ * UCSB API for recommendations.
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
