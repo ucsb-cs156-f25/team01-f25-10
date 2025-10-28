@@ -3,32 +3,24 @@ package edu.ucsb.cs156.example.controllers;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import edu.ucsb.cs156.example.entities.UCSBDiningCommonsMenuItem;
 import edu.ucsb.cs156.example.errors.EntityNotFoundException;
-// import edu.ucsb.cs156.example.errors.EntityNotFoundException;
-// import edu.ucsb.cs156.example.repositories.UCSBDateRepository;
 import edu.ucsb.cs156.example.repositories.UCSBDiningCommonsMenuItemRepository;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-// import jakarta.validation.Valid;
-// import java.time.LocalDateTime;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-// import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
-// import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-// import org.springframework.web.bind.annotation.PutMapping;
-// import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-/** This is a REST controller for UCSBDates */
+/** This is a REST controller for UCSBDiningCommonsMenuItem */
 @Tag(name = "UCSBDiningCommonsMenuItem")
 @RequestMapping("/api/ucsbdiningcommonsmenuitem")
 @RestController
@@ -68,11 +60,6 @@ public class UCSBDiningCommonsMenuItemController extends ApiController {
       @Parameter(name = "station") @RequestParam String station)
       throws JsonProcessingException {
 
-    // For an explanation of @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-    // See: https://www.baeldung.com/spring-date-parameters
-
-    // log.info("localDateTime={}", localDateTime);
-
     UCSBDiningCommonsMenuItem ucsbDiningCommonsMenuItem = new UCSBDiningCommonsMenuItem();
     ucsbDiningCommonsMenuItem.setDiningcommonscode(diningcommonscode);
     ucsbDiningCommonsMenuItem.setName(name);
@@ -85,7 +72,7 @@ public class UCSBDiningCommonsMenuItemController extends ApiController {
   }
 
   /**
-   * Get a single date by id
+   * Get a single diningcommonsmenuitem by id
    *
    * @param id the id of the dining commons menu item
    * @return a UCSBDiningCommonsMenuItem
@@ -103,11 +90,11 @@ public class UCSBDiningCommonsMenuItemController extends ApiController {
   }
 
   /**
-   * Update a single date
+   * Update a single diningcommonsmenuitem
    *
    * @param id id of the diningcommonsmenuitem to update
    * @param incoming the new diningcommonsmenuitem
-   * @return the updated date object
+   * @return the updated diningcommonsmenuitem object
    */
   @Operation(summary = "Update a single dining commons menu item")
   @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -133,8 +120,8 @@ public class UCSBDiningCommonsMenuItemController extends ApiController {
   /**
    * Delete a UCSBDiningCommonsMenuItem
    *
-   * @param id the id of the date to delete
-   * @return a message indicating the date was deleted
+   * @param id the id of the diningcommonsmenuitem to delete
+   * @return a message indicating the diningcommonsmenuitem was deleted
    */
   @Operation(summary = "Delete a UCSBDiningCommonsMenuItem")
   @PreAuthorize("hasRole('ROLE_ADMIN')")
