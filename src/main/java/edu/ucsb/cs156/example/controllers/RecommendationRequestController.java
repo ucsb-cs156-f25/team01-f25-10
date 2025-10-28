@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-/** This is a REST controller for UCSBDates */
+/** This is a REST controller for RecommendationRequest */
 @Tag(name = "RecommendationRequest")
 @RequestMapping("/api/recommendationrequest")
 @RestController
@@ -48,7 +48,7 @@ public class RecommendationRequestController extends ApiController {
   /**
    * Get a single request by id
    *
-   * @param id the id of the date
+   * @param id the id of the request
    * @return a RecommendationRequest
    */
   @Operation(summary = "Get a single recommendation request")
@@ -126,7 +126,7 @@ public class RecommendationRequestController extends ApiController {
   @Operation(summary = "Delete a recommendation request")
   @PreAuthorize("hasRole('ROLE_ADMIN')")
   @DeleteMapping("")
-  public Object deleteUCSBDate(@Parameter(name = "id") @RequestParam Long id) {
+  public Object deleteRecommendationRequest(@Parameter(name = "id") @RequestParam Long id) {
     RecommendationRequest recRequest =
         recommendationRequestRepository
             .findById(id)
