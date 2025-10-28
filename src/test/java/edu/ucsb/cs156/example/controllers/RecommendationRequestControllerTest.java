@@ -1,11 +1,13 @@
 package edu.ucsb.cs156.example.controllers;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -220,9 +222,71 @@ public class RecommendationRequestControllerTest extends ControllerTestCase {
     assertEquals(expectedJson, responseString);
   }
 
+  // Tests for DELETE
+
   @WithMockUser(roles = {"ADMIN", "USER"})
   @Test
-  public void admin_can_edit_an_existing_ucsbdate() throws Exception {
+  public void admin_can_delete_a_recommendationrequest() throws Exception {
+    // arrange
+
+    LocalDateTime ldt1 = LocalDateTime.parse("2025-01-03T00:00:00");
+    LocalDateTime ldt2 = LocalDateTime.parse("2025-01-03T00:00:00");
+
+    RecommendationRequest recommendationRequest1 =
+        RecommendationRequest.builder()
+            .requesteremail("reqmail@mail.com")
+            .professoremail("profmail@mail.com")
+            .explanation("Test")
+            .daterequested(ldt1)
+            .dateneeded(ldt2)
+            .done(true)
+            .build();
+
+    when(recommendationRequestRepository.findById(eq(15L)))
+        .thenReturn(Optional.of(recommendationRequest1));
+
+    // act
+    MvcResult response =
+        mockMvc
+            .perform(delete("/api/recommendationrequest?id=15").with(csrf()))
+            .andExpect(status().isOk())
+            .andReturn();
+
+    // assert
+    verify(recommendationRequestRepository, times(1)).findById(15L);
+    verify(recommendationRequestRepository, times(1)).delete(any());
+
+    Map<String, Object> json = responseToJson(response);
+    assertEquals("RecommendationRequest with id 15 deleted", json.get("message"));
+  }
+
+  @WithMockUser(roles = {"ADMIN", "USER"})
+  @Test
+  public void
+      admin_tries_to_delete_non_existant_recommendationrequest_and_gets_right_error_message()
+          throws Exception {
+    // arrange
+
+    when(recommendationRequestRepository.findById(eq(15L))).thenReturn(Optional.empty());
+
+    // act
+    MvcResult response =
+        mockMvc
+            .perform(delete("/api/recommendationrequest?id=15").with(csrf()))
+            .andExpect(status().isNotFound())
+            .andReturn();
+
+    // assert
+    verify(recommendationRequestRepository, times(1)).findById(15L);
+    Map<String, Object> json = responseToJson(response);
+    assertEquals("RecommendationRequest with id 15 not found", json.get("message"));
+  }
+
+  // Tests for PUT
+
+  @WithMockUser(roles = {"ADMIN", "USER"})
+  @Test
+  public void admin_can_edit_an_existing_recommendationrequest() throws Exception {
     // arrange
 
     LocalDateTime ldt1 = LocalDateTime.parse("2025-01-03T00:00:00");
@@ -278,7 +342,7 @@ public class RecommendationRequestControllerTest extends ControllerTestCase {
 
   @WithMockUser(roles = {"ADMIN", "USER"})
   @Test
-  public void admin_cannot_edit_ucsbdate_that_does_not_exist() throws Exception {
+  public void admin_cannot_edit_recommendationrequest_that_does_not_exist() throws Exception {
     // arrange
 
     LocalDateTime ldt1 = LocalDateTime.parse("2025-01-03T00:00:01");
