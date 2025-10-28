@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-/** This is a REST controller for UCSBDates */
+/** This is a REST controller for RecommendationRequest */
 @Tag(name = &quot;RecommendationRequest&quot;)
 @RequestMapping(&quot;/api/recommendationrequest&quot;)
 @RestController
@@ -48,7 +48,7 @@ import org.springframework.web.bind.annotation.RestController;
   /**
    * Get a single request by id
    *
-   * @param id the id of the date
+   * @param id the id of the request
    * @return a RecommendationRequest
    */
   @Operation(summary = &quot;Get a single recommendation request&quot;)
@@ -126,7 +126,7 @@ import org.springframework.web.bind.annotation.RestController;
   @Operation(summary = &quot;Delete a recommendation request&quot;)
   @PreAuthorize(&quot;hasRole('ROLE_ADMIN')&quot;)
   @DeleteMapping(&quot;&quot;)
-  public Object deleteUCSBDate(@Parameter(name = &quot;id&quot;) @RequestParam Long id) {
+  public Object deleteRecommendationRequest(@Parameter(name = &quot;id&quot;) @RequestParam Long id) {
 <span class="fc" id="L130">    RecommendationRequest recRequest =</span>
         recommendationRequestRepository
 <span class="fc" id="L132">            .findById(id)</span>
