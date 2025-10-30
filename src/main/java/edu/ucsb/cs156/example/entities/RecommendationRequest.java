@@ -10,7 +10,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-/** This is a JPA entity that represents a Recommendation Request */
+/**
+ * This is a JPA entity that represents a Recommendation Request, i.e. an entry that comes from the
+ * UCSB API for recommendations.
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -21,10 +24,10 @@ public class RecommendationRequest {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;
 
-  private String requesterEmail;
-  private String professorEmail;
+  private String requesteremail;
+  private String professoremail;
   private String explanation;
-  private LocalDateTime dateRequested;
-  private LocalDateTime dateNeeded;
+  private LocalDateTime daterequested;
+  private LocalDateTime dateneeded;
   private boolean done;
 }
