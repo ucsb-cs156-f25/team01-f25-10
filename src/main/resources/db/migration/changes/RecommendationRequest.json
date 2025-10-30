@@ -1,9 +1,9 @@
-  {
+{
     "databaseChangeLog": [
       {
         "changeSet": {
-          "id": "Articles-1",
-          "author": "CharlieN",
+          "id": "RecommendationRequest-1",
+          "author": "JosephN",
           "preConditions": [
             {
               "onFail": "MARK_RAN"
@@ -12,7 +12,7 @@
               "not": [
                 {
                   "tableExists": {
-                    "tableName": "ARTICLES"
+                    "tableName": "RECOMMENDATIONREQUEST"
                   }
                 }
               ]
@@ -27,7 +27,7 @@
                       "autoIncrement": true,
                       "constraints": {
                         "primaryKey": true,
-                        "primaryKeyName": "ARTICLES_PK"
+                        "primaryKeyName": "RECOMMENDATIONREQUEST_PK"
                       },
                       "name": "ID",
                       "type": "BIGINT"
@@ -35,13 +35,13 @@
                   },
                   {
                     "column": {
-                      "name": "TITLE",
+                      "name": "REQUESTEREMAIL",
                       "type": "VARCHAR(255)"
                     }
                   },
                   {
                     "column": {
-                      "name": "URL",
+                      "name": "PROFESSOREMAIL",
                       "type": "VARCHAR(255)"
                     }
                   },
@@ -53,18 +53,24 @@
                   },
                   {
                     "column": {
-                      "name": "EMAIL",
-                      "type": "VARCHAR(255)"
-                   }
-                 },
-                 {
+                      "name": "DATEREQUESTED",
+                      "type": "TIMESTAMP"
+                    }
+                  },
+                  {
                     "column": {
-                            "name": "DATEADDED",
-                            "type": "TIMESTAMP"
-                           }
-                          }
+                      "name": "DATENEEDED",
+                      "type": "TIMESTAMP"
+                    }
+                  },
+                  {
+                    "column": {
+                      "name": "DONE",
+                      "type": "BOOLEAN"
+                    }
+                  }
                 ],
-                "tableName": "ARTICLES"
+                "tableName": "RECOMMENDATIONREQUEST"
               }
             }
           ]

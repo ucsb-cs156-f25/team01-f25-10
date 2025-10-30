@@ -5,7 +5,7 @@ Instructions: <https://ucsb-cs156.github.io/f25/lab/team01.html>
 Deployments:
 
 * Prod: <https://team01-f25-10.dokku-10.cs.ucsb.edu>
-* QA: <https://team01-f25-10-qa.dokku-10.cs.ucsb.edu>
+* QA: <https://team01-f25-qa.dokku-10.cs.ucsb.edu>
 
 | Table                     | Name         | Github Id   |
 |---------------------------|--------------|-------------|
