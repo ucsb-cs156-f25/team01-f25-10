@@ -2,6 +2,7 @@ package edu.ucsb.cs156.example.controllers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import edu.ucsb.cs156.example.entities.Articles;
+import edu.ucsb.cs156.example.errors.EntityNotFoundException;
 import edu.ucsb.cs156.example.repositories.ArticlesRepository;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -80,5 +81,23 @@ public class ArticlesController extends ApiController {
     Articles savedArticles = articlesRepository.save(articles);
 
     return savedArticles;
+  }
+
+  /**
+   * Get a single articles
+   *
+   * @param id the id of the articles
+   * @return an Articles
+   */
+  @Operation(summary = "Get a single articles")
+  @PreAuthorize("hasRole('ROLE_USER')")
+  @GetMapping("")
+  public Articles getById(@Parameter(name = "id") @RequestParam Long id) {
+    Articles articles =
+        articlesRepository
+            .findById(id)
+            .orElseThrow(() -> new EntityNotFoundException(Articles.class, id));
+
+    return articles;
   }
 }
