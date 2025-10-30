@@ -2,6 +2,7 @@
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import edu.ucsb.cs156.example.entities.MenuItemReview;
+import edu.ucsb.cs156.example.errors.EntityNotFoundException;
 import edu.ucsb.cs156.example.repositories.MenuItemReviewRepository;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -21,8 +22,8 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = &quot;MenuItemReviews&quot;)
 @RequestMapping(&quot;/api/menuitemreviews&quot;)
 @RestController
-<span class="fc" id="L24">@Slf4j</span>
-<span class="fc" id="L25">public class MenuItemReviewController extends ApiController {</span>
+<span class="fc" id="L25">@Slf4j</span>
+<span class="fc" id="L26">public class MenuItemReviewController extends ApiController {</span>
   @Autowired MenuItemReviewRepository menuItemReviewRepository;
 
   /**
@@ -34,8 +35,26 @@ import org.springframework.web.bind.annotation.RestController;
   @PreAuthorize(&quot;hasRole('ROLE_USER')&quot;)
   @GetMapping(&quot;/all&quot;)
   public Iterable&lt;MenuItemReview&gt; allMenuItemReviews() {
-<span class="fc" id="L37">    Iterable&lt;MenuItemReview&gt; reviews = menuItemReviewRepository.findAll();</span>
-<span class="fc" id="L38">    return reviews;</span>
+<span class="fc" id="L38">    Iterable&lt;MenuItemReview&gt; reviews = menuItemReviewRepository.findAll();</span>
+<span class="fc" id="L39">    return reviews;</span>
+  }
+
+  /**
+   * Get a single menu item review by id
+   *
+   * @param id the id of the menu item review
+   * @return a MenuItemReview
+   */
+  @Operation(summary = &quot;Get a single menu item review&quot;)
+  @PreAuthorize(&quot;hasRole('ROLE_USER')&quot;)
+  @GetMapping(&quot;&quot;)
+  public MenuItemReview getById(@Parameter(name = &quot;id&quot;) @RequestParam Long id) {
+<span class="fc" id="L52">    MenuItemReview menuItemReview =</span>
+        menuItemReviewRepository
+<span class="fc" id="L54">            .findById(id)</span>
+<span class="fc" id="L55">            .orElseThrow(() -&gt; new EntityNotFoundException(MenuItemReview.class, id));</span>
+
+<span class="fc" id="L57">    return menuItemReview;</span>
   }
 
   /**
@@ -68,18 +87,18 @@ import org.springframework.web.bind.annotation.RestController;
     // For an explanation of @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     // See: https://www.baeldung.com/spring-date-parameters
 
-<span class="fc" id="L71">    log.info(&quot;dateReviewed={}&quot;, dateReviewed);</span>
+<span class="fc" id="L90">    log.info(&quot;dateReviewed={}&quot;, dateReviewed);</span>
 
-<span class="fc" id="L73">    MenuItemReview menuItemReview = new MenuItemReview();</span>
-<span class="fc" id="L74">    menuItemReview.setItemId(itemId);</span>
-<span class="fc" id="L75">    menuItemReview.setReviewerEmail(reviewerEmail);</span>
-<span class="fc" id="L76">    menuItemReview.setStars(stars);</span>
-<span class="fc" id="L77">    menuItemReview.setDateReviewed(dateReviewed);</span>
-<span class="fc" id="L78">    menuItemReview.setComments(comments);</span>
+<span class="fc" id="L92">    MenuItemReview menuItemReview = new MenuItemReview();</span>
+<span class="fc" id="L93">    menuItemReview.setItemId(itemId);</span>
+<span class="fc" id="L94">    menuItemReview.setReviewerEmail(reviewerEmail);</span>
+<span class="fc" id="L95">    menuItemReview.setStars(stars);</span>
+<span class="fc" id="L96">    menuItemReview.setDateReviewed(dateReviewed);</span>
+<span class="fc" id="L97">    menuItemReview.setComments(comments);</span>
 
-<span class="fc" id="L80">    MenuItemReview savedMenuItemReview = menuItemReviewRepository.save(menuItemReview);</span>
+<span class="fc" id="L99">    MenuItemReview savedMenuItemReview = menuItemReviewRepository.save(menuItemReview);</span>
 
-<span class="fc" id="L82">    return savedMenuItemReview;</span>
+<span class="fc" id="L101">    return savedMenuItemReview;</span>
   }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
