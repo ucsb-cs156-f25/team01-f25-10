@@ -2,6 +2,7 @@
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import edu.ucsb.cs156.example.entities.Articles;
+import edu.ucsb.cs156.example.errors.EntityNotFoundException;
 import edu.ucsb.cs156.example.repositories.ArticlesRepository;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -21,8 +22,8 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = &quot;Articles&quot;)
 @RequestMapping(&quot;/api/articles&quot;)
 @RestController
-<span class="fc" id="L24">@Slf4j</span>
-<span class="fc" id="L25">public class ArticlesController extends ApiController {</span>
+<span class="fc" id="L25">@Slf4j</span>
+<span class="fc" id="L26">public class ArticlesController extends ApiController {</span>
 
   @Autowired ArticlesRepository articlesRepository;
 
@@ -35,8 +36,8 @@ import org.springframework.web.bind.annotation.RestController;
   @PreAuthorize(&quot;hasRole('ROLE_USER')&quot;)
   @GetMapping(&quot;/all&quot;)
   public Iterable&lt;Articles&gt; allArticles() {
-<span class="fc" id="L38">    Iterable&lt;Articles&gt; articles = articlesRepository.findAll();</span>
-<span class="fc" id="L39">    return articles;</span>
+<span class="fc" id="L39">    Iterable&lt;Articles&gt; articles = articlesRepository.findAll();</span>
+<span class="fc" id="L40">    return articles;</span>
   }
 
   /**
@@ -69,17 +70,35 @@ import org.springframework.web.bind.annotation.RestController;
     // For an explanation of @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     // See: https://www.baeldung.com/spring-date-parameters
 
-<span class="fc" id="L72">    log.info(&quot;dateAdded={}&quot;, dateAdded);</span>
+<span class="fc" id="L73">    log.info(&quot;dateAdded={}&quot;, dateAdded);</span>
 
-<span class="fc" id="L74">    Articles articles = new Articles();</span>
-<span class="fc" id="L75">    articles.setTitle(title);</span>
-<span class="fc" id="L76">    articles.setUrl(url);</span>
-<span class="fc" id="L77">    articles.setExplanation(explanation);</span>
-<span class="fc" id="L78">    articles.setEmail(email);</span>
-<span class="fc" id="L79">    articles.setDateAdded(dateAdded);</span>
-<span class="fc" id="L80">    Articles savedArticles = articlesRepository.save(articles);</span>
+<span class="fc" id="L75">    Articles articles = new Articles();</span>
+<span class="fc" id="L76">    articles.setTitle(title);</span>
+<span class="fc" id="L77">    articles.setUrl(url);</span>
+<span class="fc" id="L78">    articles.setExplanation(explanation);</span>
+<span class="fc" id="L79">    articles.setEmail(email);</span>
+<span class="fc" id="L80">    articles.setDateAdded(dateAdded);</span>
+<span class="fc" id="L81">    Articles savedArticles = articlesRepository.save(articles);</span>
 
-<span class="fc" id="L82">    return savedArticles;</span>
+<span class="fc" id="L83">    return savedArticles;</span>
+  }
+
+  /**
+   * Get a single articles
+   *
+   * @param id the id of the articles
+   * @return an Articles
+   */
+  @Operation(summary = &quot;Get a single articles&quot;)
+  @PreAuthorize(&quot;hasRole('ROLE_USER')&quot;)
+  @GetMapping(&quot;&quot;)
+  public Articles getById(@Parameter(name = &quot;id&quot;) @RequestParam Long id) {
+<span class="fc" id="L96">    Articles articles =</span>
+        articlesRepository
+<span class="fc" id="L98">            .findById(id)</span>
+<span class="fc" id="L99">            .orElseThrow(() -&gt; new EntityNotFoundException(Articles.class, id));</span>
+
+<span class="fc" id="L101">    return articles;</span>
   }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
