@@ -24,5 +24,7 @@ public class Articles {
   private String url;
   private String explanation;
   private String email;
+
+  @Column(name = "DATEADDED")
   private LocalDateTime dateAdded;
 }
