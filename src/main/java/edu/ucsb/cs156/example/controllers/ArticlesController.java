@@ -52,7 +52,7 @@ public class ArticlesController extends ApiController {
   @Operation(summary = "Create a new article")
   @PreAuthorize("hasRole('ROLE_ADMIN')")
   @PostMapping("/post")
-  public Article postArticle(
+  public Articles postArticles(
       @Parameter(name = "title") @RequestParam String title,
       @Parameter(name = "url") @RequestParam String url,
       @Parameter(name = "explanation") @RequestParam String explanation,
