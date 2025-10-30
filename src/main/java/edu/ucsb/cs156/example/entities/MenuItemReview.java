@@ -10,6 +10,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * This is a JPA entity that represents a MenuItemReview, i.e. an entry that comes from the UCSB API
+ * for reviews about different items at dining halls.
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
