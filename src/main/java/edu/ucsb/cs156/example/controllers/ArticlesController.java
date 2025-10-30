@@ -28,7 +28,7 @@ public class ArticlesController extends ApiController {
   @Autowired ArticlesRepository articlesRepository;
 
   /**
-   * List all Articles 
+   * List all Articles
    *
    * @return an iterable of Article
    */
