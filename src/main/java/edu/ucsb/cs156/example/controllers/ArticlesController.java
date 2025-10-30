@@ -1,8 +1,8 @@
 package edu.ucsb.cs156.example.controllers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import edu.ucsb.cs156.example.entities.Article;
-import edu.ucsb.cs156.example.repositories.ArticleRepository;
+import edu.ucsb.cs156.example.entities.Articles;
+import edu.ucsb.cs156.example.repositories.ArticlesRepository;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 public class ArticlesController extends ApiController {
 
-  @Autowired ArticleRepository articleRepository;
+  @Autowired ArticlesRepository articlesRepository;
 
   /**
    * List all Articles
@@ -34,8 +34,8 @@ public class ArticlesController extends ApiController {
   @Operation(summary = "List all articles")
   @PreAuthorize("hasRole('ROLE_USER')")
   @GetMapping("/all")
-  public Iterable<Article> allArticles() {
-    Iterable<Article> articles = articleRepository.findAll();
+  public Iterable<Articles> allArticles() {
+    Iterable<Articles> articles = articlesRepository.findAll();
     return articles;
   }
 
@@ -71,14 +71,14 @@ public class ArticlesController extends ApiController {
 
     log.info("dateAdded={}", dateAdded);
 
-    Article article = new Article();
-    article.setTitle(title);
-    article.setUrl(url);
-    article.setExplanation(explanation);
-    article.setEmail(email);
-    article.setDateAdded(dateAdded);
-    Article savedArticle = articleRepository.save(article);
+    Articles articles = new Articles();
+    articles.setTitle(title);
+    articles.setUrl(url);
+    articles.setExplanation(explanation);
+    articles.setEmail(email);
+    articles.setDateAdded(dateAdded);
+    Articles savedArticles = articlesRepository.save(articles);
 
-    return savedArticle;
+    return savedArticles;
   }
 }
