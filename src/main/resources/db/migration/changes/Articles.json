@@ -60,7 +60,7 @@
                  {
                     "column": {
                             "name": "DATEADDED",
-                            "type": "DATE"
+                            "type": "TIMESTAMP"
                            }
                           }
                 ],

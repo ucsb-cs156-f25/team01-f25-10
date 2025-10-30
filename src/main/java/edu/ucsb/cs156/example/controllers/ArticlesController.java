@@ -7,7 +7,6 @@ import edu.ucsb.cs156.example.repositories.ArticlesRepository;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import java.time.LocalDate;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -41,7 +40,7 @@ public class ArticlesController extends ApiController {
   }
 
   /**
-   * Get a single date by id
+   * Get a single article by id
    *
    * @param id the id of the article
    * @return a Article
@@ -81,8 +80,8 @@ public class ArticlesController extends ApiController {
               description =
                   "date (in iso format, e.g. YYYY-mm-dd; see https://en.wikipedia.org/wiki/ISO_8601)")
           @RequestParam("dateAdded")
-          @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-          LocalDate dateAdded)
+          @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+          LocalDateTime dateAdded)
       throws JsonProcessingException {
 
     // For an explanation of @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
