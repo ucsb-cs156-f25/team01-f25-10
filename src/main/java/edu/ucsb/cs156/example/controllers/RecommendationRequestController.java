@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -21,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-/** This is a REST controller for UCSBDates */
+/** This is a REST controller for RecommendationRequest */
 @Tag(name = "RecommendationRequest")
 @RequestMapping("/api/recommendationrequest")
 @RestController
@@ -47,7 +48,7 @@ public class RecommendationRequestController extends ApiController {
   /**
    * Get a single request by id
    *
-   * @param id the id of the date
+   * @param id the id of the request
    * @return a RecommendationRequest
    */
   @Operation(summary = "Get a single recommendation request")
@@ -114,6 +115,25 @@ public class RecommendationRequestController extends ApiController {
     RecommendationRequest savedRecRequest = recommendationRequestRepository.save(recRequest);
 
     return savedRecRequest;
+  }
+
+  /**
+   * Delete a RecommendationRequest
+   *
+   * @param id the id of the request to delete
+   * @return a message indicating the request was deleted
+   */
+  @Operation(summary = "Delete a recommendation request")
+  @PreAuthorize("hasRole('ROLE_ADMIN')")
+  @DeleteMapping("")
+  public Object deleteRecommendationRequest(@Parameter(name = "id") @RequestParam Long id) {
+    RecommendationRequest recRequest =
+        recommendationRequestRepository
+            .findById(id)
+            .orElseThrow(() -> new EntityNotFoundException(RecommendationRequest.class, id));
+
+    recommendationRequestRepository.delete(recRequest);
+    return genericMessage("RecommendationRequest with id %s deleted".formatted(id));
   }
 
   /**
